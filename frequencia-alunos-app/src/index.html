@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conferência de Frequência de Alunos</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Conferência de Frequência de Alunos</h1>
+        <form id="form-aluno">
+            <label for="nome">Nome do Aluno:</label>
+            <input type="text" id="nome" required>
+            <label for="turma">Turma:</label>
+            <input type="text" id="turma" required>
+            <button type="submit">Registrar Frequência</button>
+        </form>
+        <div style="margin: 16px 0;">
+            <label for="filtro-data">Selecione a data da frequência:</label>
+            <input type="date" id="filtro-data" required>
+            <button id="btn-carregar-data" type="button">Carregar Data</button>
+        </div>
+        <ul id="lista-alunos"></ul>
+        <button id="btn-salvar-presenca">Salvar Presenças</button>
+        <button id="btn-salvar-pdf">Salvar Relatório em PDF</button>
+        <div id="relatorio"></div>
+    </div>
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
+  const SUPABASE_URL = "https://edozyljtstdvdbkpjmot.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkb3p5bGp0c3RkdmRia3BqbW90Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc1MDYyMDMsImV4cCI6MjA2MzA4MjIwM30.7OxXRQ9gc3JGah3GKVuGG1czuaoCvMQvTE317m43OdY";
+  window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
