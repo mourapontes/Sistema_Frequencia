@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Busca todos os alunos
         const { data: alunos, error: erroAlunos } = await supabase
             .from('alunos')
-            .select('id, nome, turma')
+            .select('id, nome, turma, rota') // <-- adicione 'rota' aqui
             .order('id', { ascending: false });
         if (erroAlunos) {
             alert('Erro ao buscar alunos: ' + erroAlunos.message);
@@ -29,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
         presencasMarcadas = {};
         alunos.forEach(aluno => {
             const li = document.createElement('li');
-            li.textContent = `${aluno.nome} - Turma: ${aluno.turma}`;
+            li.textContent = `${aluno.nome} - Turma: ${aluno.turma} - Rota: ${aluno.rota || '-'}`;
             // Checkbox de presença
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
-            checkbox.disabled = !dataSelecionada; // Desabilita se não houver data
+            checkbox.disabled = !dataSelecionada;
             checkbox.checked = presencas.includes(aluno.id);
             checkbox.onchange = () => {
                 presencasMarcadas[aluno.id] = checkbox.checked;
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Busca alunos presentes
         const { data: alunos, error: erroAlunos } = await supabase
             .from('alunos')
-            .select('nome, turma, id');
+            .select('nome, turma, id, rota'); // <-- adicione 'rota'
 
         if (erroAlunos) {
             relatorio.textContent = 'Erro ao buscar alunos.';
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const presentesNomes = alunos.filter(a => idsPresentes.includes(a.id));
         relatorio.innerHTML = `<strong>Presentes em ${dataFiltro}:</strong><br>` +
-            presentesNomes.map(a => `${a.nome} - Turma: ${a.turma}`).join('<br>');
+            presentesNomes.map(a => `${a.nome} - Turma: ${a.turma} - Rota: ${a.rota || '-'}`).join('<br>');
     }
 
     // Função para gerar PDF do relatório
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Busca alunos presentes
         const { data: alunos } = await supabase
             .from('alunos')
-            .select('nome, turma, id');
+            .select('nome, turma, id, rota'); // <-- adicione 'rota'
 
         const presentesNomes = alunos.filter(a => idsPresentes.includes(a.id));
 
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let texto = `Secretaria Municipal de Educação\nControle de Frequência dos Usuários do Transporte Escolar\n\n`;
         texto += `Relatório de Presença - ${dataFiltro}\n\n`;
         presentesNomes.forEach((a, i) => {
-            texto += `${i + 1}. ${a.nome} - Turma: ${a.turma}\n`;
+            texto += `${i + 1}. ${a.nome} - Turma: ${a.turma} - Rota: ${a.rota || '-'}\n`;
         });
 
         // Gera o PDF
@@ -151,7 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const nome = document.getElementById('nome').value;
         const turma = document.getElementById('turma').value;
-        await supabase.from('alunos').insert([{ nome, turma }]);
+        const rota = document.getElementById('rota').value;
+        await supabase.from('alunos').insert([{ nome, turma, rota }]);
         renderizarAlunos(dataSelecionada);
         this.reset();
     });
