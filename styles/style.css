@@ -160,6 +160,20 @@ button:hover {
     font-size: 1.1rem;
 }
 
+select {
+    padding: 8px 10px;
+    border: 1.5px solid #bbdefb;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: #f9fafb;
+    transition: border 0.2s;
+    margin-bottom: 10px;
+}
+select:focus {
+    border: 2px solid #ffd600;
+    outline: none;
+}
+
 @media (max-width: 650px) {
     .container {
         padding: 12px 4px;
