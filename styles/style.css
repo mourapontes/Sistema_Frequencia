@@ -1,98 +1,111 @@
 body {
-    background: linear-gradient(120deg, #e3f2fd 0%, #fffde7 100%);
+    background: linear-gradient(120deg, #e3f2fd 0%, #fffde7 60%, #e8f5e9 100%);
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
 }
 
 .container {
     max-width: 540px;
-    margin: 40px auto;
+    margin: 32px auto 0 auto;
     background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 4px 24px rgba(33, 150, 243, 0.08);
-    padding: 36px 28px 28px 28px;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(33, 150, 243, 0.10);
+    padding: 32px 20px 24px 20px;
     border-top: 8px solid #ffd600;
+    border-bottom: 8px solid #43a047;
 }
 
 h1 {
     text-align: center;
     color: #1565c0;
-    margin-bottom: 28px;
-    font-size: 1.7rem;
+    margin-bottom: 8px;
+    font-size: 2rem;
     letter-spacing: 1px;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    line-height: 1.2;
 }
 
 h1 span {
-    font-size: 2rem;
+    font-size: 2.2rem;
     vertical-align: middle;
     margin-left: 8px;
 }
 
-form {
+p {
+    text-align: center;
+    color: #43a047;
+    font-weight: 700;
+    margin-top: -10px;
+    margin-bottom: 24px;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
+form, form#form-aluno {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 22px;
+    align-items: center; /* Centraliza os campos do formulário */
 }
 
 label {
     font-weight: 500;
     color: #1565c0;
+    margin-bottom: 2px;
+    align-self: flex-start; /* Mantém o label à esquerda */
 }
 
-input[type="text"],
-input[type="number"],
-input[type="date"],
-button {
-    padding: 10px;
-    margin: 10px 0;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-}
-
-input[type="text"], input[type="date"] {
-    padding: 8px 10px;
+input[type="text"], input[type="date"], select {
+    padding: 12px 12px;
     border: 1.5px solid #bbdefb;
-    border-radius: 6px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 1.08rem;
     background: #f9fafb;
     transition: border 0.2s;
+    margin-bottom: 2px;
+    width: 100%;
+    max-width: 350px;
+    box-sizing: border-box;
+    display: block;
 }
 
-input[type="text"]:focus, input[type="date"]:focus {
-    border: 2px solid #ffd600;
+input[type="text"]:focus, input[type="date"]:focus, select:focus {
+    border: 2px solid #43a047;
     outline: none;
+    background: #fff;
 }
 
 button {
-    background: linear-gradient(90deg, #ffd600 60%, #1976d2 100%);
+    background: linear-gradient(90deg, #ffd600 40%, #43a047 100%);
     color: #1a237e;
     border: none;
-    border-radius: 6px;
-    padding: 10px 0;
-    font-size: 1rem;
-    font-weight: 600;
+    border-radius: 8px;
+    padding: 14px 0;
+    font-size: 1.08rem;
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 4px;
-    transition: background 0.2s, color 0.2s;
+    margin-top: 10px;
+    margin-bottom: 6px;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     box-shadow: 0 2px 8px rgba(33, 150, 243, 0.07);
+    letter-spacing: 0.5px;
+    width: 80%;
+    max-width: 300px;
+    display: block;
+    align-self: center; /* Centraliza o botão */
 }
 
-button:active {
-    transform: scale(0.98);
-}
-
-button:hover {
-    background: linear-gradient(90deg, #ffe082 60%, #1565c0 100%);
+button:hover, button:focus {
+    background: linear-gradient(90deg, #ffe082 40%, #388e3c 100%);
     color: #fff;
+    box-shadow: 0 4px 16px rgba(67, 160, 71, 0.12);
 }
 
 .table {
@@ -129,56 +142,120 @@ button:hover {
     justify-content: space-between;
     background: #fffde7;
     border-left: 6px solid #ffd600;
-    border-radius: 6px;
-    padding: 10px 14px;
-    margin-bottom: 10px;
-    font-size: 1rem;
+    border-right: 6px solid #43a047;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-size: 1.08rem;
     color: #263238;
     box-shadow: 0 1px 4px rgba(33, 150, 243, 0.04);
+    transition: background 0.2s;
+}
+
+#lista-alunos li:hover {
+    background: #f1f8e9;
 }
 
 #lista-alunos input[type="checkbox"] {
-    transform: scale(1.25);
-    margin-left: 10px;
-    accent-color: #ffd600;
+    transform: scale(1.35);
+    margin-left: 12px;
+    accent-color: #43a047;
+    cursor: pointer;
 }
 
 #relatorio {
     margin-top: 28px;
     background: #e3f2fd;
     border-left: 6px solid #1976d2;
-    border-radius: 6px;
-    padding: 16px 18px;
+    border-right: 6px solid #43a047;
+    border-radius: 8px;
+    padding: 18px 18px;
     color: #1a237e;
-    font-size: 1rem;
+    font-size: 1.08rem;
     min-height: 32px;
     box-shadow: 0 1px 4px rgba(33, 150, 243, 0.04);
+    word-break: break-word;
+    text-align: center;
 }
 
 #relatorio strong {
     color: #1976d2;
-    font-size: 1.1rem;
+    font-size: 1.13rem;
 }
 
-select {
-    padding: 8px 10px;
-    border: 1.5px solid #bbdefb;
-    border-radius: 6px;
-    font-size: 1rem;
-    background: #f9fafb;
-    transition: border 0.2s;
-    margin-bottom: 10px;
+.cabecalho {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 18px;
 }
-select:focus {
-    border: 2px solid #ffd600;
-    outline: none;
+
+.cabecalho h1 {
+    text-align: center;
+    color: #1565c0;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.icone-onibus {
+    font-size: 2.2rem;
+    margin-bottom: 4px;
+}
+
+.subtitulo {
+    text-align: center;
+    color: #43a047;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0 0 18px 0;
+    letter-spacing: 1px;
 }
 
 @media (max-width: 650px) {
     .container {
-        padding: 12px 4px;
+        padding: 10px 2vw 18px 2vw;
+        margin: 10px 0 0 0;
+        border-radius: 0;
+        box-shadow: none;
+        border-top: 5px solid #ffd600;
+        border-bottom: 5px solid #43a047;
     }
     h1 {
-        font-size: 1.1rem;
+        font-size: 1.15rem;
+        gap: 5px;
+    }
+    h1 span {
+        font-size: 1.4rem;
+        margin-left: 4px;
+    }
+    form, form#form-aluno {
+        gap: 10px;
+    }
+    #lista-alunos li {
+        font-size: 0.97rem;
+        padding: 10px 8px;
+        margin-bottom: 8px;
+    }
+    button {
+        padding: 12px 0;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 100%;
+    }
+    #relatorio {
+        padding: 12px 8px;
+        font-size: 0.97rem;
+    }
+    .cabecalho h1 {
+        font-size: 1.15rem;
+    }
+    .icone-onibus {
+        font-size: 1.4rem;
+    }
+    .subtitulo {
+        font-size: 1rem;
     }
 }
