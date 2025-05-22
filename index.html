@@ -8,10 +8,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>
-            Conferência de Frequência de Alunos(as) do Transporte Escolar
-            <span style="font-size:1.7rem; vertical-align:middle; margin-left:8px;">🚌</span>
-        </h1>
+        <div class="cabecalho">
+            <h1>Conferência de Frequência de Alunos(as) do Transporte Escolar</h1>
+            <div class="icone-onibus" aria-label="ônibus escolar">🚌</div>
+            <p class="subtitulo">Módulo Administrativo</p>
+        </div>
         <form id="form-aluno">
             <label for="nome">Nome do Aluno:</label>
             <input type="text" id="nome" required>
@@ -20,23 +21,37 @@
             <label for="rota">Rota:</label>
             <select id="rota" required>
                 <option value="">Selecione a rota</option>
-                <option value="1">Rota 1</option>
-                <option value="2">Rota 2</option>
-                <option value="3">Rota 3</option>
-                <option value="4">Rota 4</option>
-                <option value="5">Rota 5</option>
-                <option value="6">Rota 6</option>
-                <option value="7">Rota 7</option>
-                <option value="8">Rota 8</option>
-                <option value="9">Rota 9</option>
-                <option value="10">Rota 10</option>
+                <option value="Rota Sítio">Rota Sítio</option>
+                <option value="Rota Panasco">Rota Panasco</option>
+                <option value="Rota Sossego">Rota Sossego</option>
+                <option value="Rota Extrema">Rota Extrema</option>
+                <option value="Rota Salina">Rota Salina</option>
+                <option value="Rota Umburana">Rota Umburana</option>
+                <option value="Rota Pedrinhas">Rota Pedrinhas</option>
+                <option value="Rota Azevedo">Rota Azevedo</option>
+                <option value="Rota 9">Rota 9</option>
+                <option value="Rota 10">Rota 10</option>
             </select>
             <button type="submit">Registrar Aluno(a)</button>
         </form>
         <div style="margin: 16px 0;">
             <label for="filtro-data">Selecione a data da frequência:</label>
             <input type="date" id="filtro-data" required>
-            <button id="btn-carregar-data" type="button">Carregar Data</button>
+            <label for="filtro-rota" style="margin-left:10px;">Selecione a rota:</label>
+            <select id="filtro-rota" required>
+                <option value="">Todas as rotas</option>
+                <option value="Rota Sítio">Rota Sítio</option>
+                <option value="Rota Panasco">Rota Panasco</option>
+                <option value="Rota Sossego">Rota Sossego</option>
+                <option value="Rota Extrema">Rota Extrema</option>
+                <option value="Rota Salina">Rota Salina</option>
+                <option value="Rota Umburana">Rota Umburana</option>
+                <option value="Rota Pedrinhas">Rota Pedrinhas</option>
+                <option value="Rota Azevedo">Rota Azevedo</option>
+                <option value="Rota 9">Rota 9</option>
+                <option value="Rota 10">Rota 10</option>
+            </select>
+            <button id="btn-carregar-data" type="button">Carregar Data/Rota</button>
         </div>
         <ul id="lista-alunos"></ul>
         <button id="btn-salvar-presenca">Salvar Presenças</button>
