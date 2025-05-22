@@ -5,14 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let presencasMarcadas = {};
 
     // Renderiza lista de alunos com checkboxes
-    async function renderizarAlunos(dataFiltro = null) {
+    async function renderizarAlunos(dataFiltro = null, rotaFiltro = null) {
         const lista = document.getElementById('lista-alunos');
         lista.innerHTML = '';
-        // Busca todos os alunos
-        const { data: alunos, error: erroAlunos } = await supabase
-            .from('alunos')
-            .select('id, nome, turma, rota') // <-- adicione 'rota' aqui
-            .order('id', { ascending: false });
+        // Busca todos os alunos, filtrando por rota se necessário
+        let query = supabase.from('alunos').select('id, nome, turma, rota').order('id', { ascending: false });
+        if (rotaFiltro && rotaFiltro !== "") {
+            query = query.eq('rota', rotaFiltro);
+        }
+        const { data: alunos, error: erroAlunos } = await query;
         if (erroAlunos) {
             alert('Erro ao buscar alunos: ' + erroAlunos.message);
             return;
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Renderiza relatório dos presentes na data consultada
-    async function renderizarRelatorio(dataFiltro) {
+    async function renderizarRelatorio(dataFiltro, rotaFiltro = null) {
         const relatorio = document.getElementById('relatorio');
         relatorio.innerHTML = '';
         if (!dataFiltro) return;
@@ -91,10 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const idsPresentes = presencas.map(p => p.aluno_id);
 
-        // Busca alunos presentes
-        const { data: alunos, error: erroAlunos } = await supabase
-            .from('alunos')
-            .select('nome, turma, id, rota'); // <-- adicione 'rota'
+        // Busca alunos presentes, filtrando por rota se necessário
+        let query = supabase.from('alunos').select('nome, turma, id, rota');
+        if (rotaFiltro && rotaFiltro !== "") {
+            query = query.eq('rota', rotaFiltro);
+        }
+        const { data: alunos, error: erroAlunos } = await query;
 
         if (erroAlunos) {
             relatorio.textContent = 'Erro ao buscar alunos.';
@@ -102,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const presentesNomes = alunos.filter(a => idsPresentes.includes(a.id));
-        relatorio.innerHTML = `<strong>Presentes em ${dataFiltro}:</strong><br>` +
+        relatorio.innerHTML = `<strong>Presentes em ${dataFiltro}${rotaFiltro ? ' - ' + rotaFiltro : ''}:</strong><br>` +
             presentesNomes.map(a => `${a.nome} - Turma: ${a.turma} - Rota: ${a.rota || '-'}`).join('<br>');
     }
 
@@ -152,9 +155,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const nome = document.getElementById('nome').value;
         const turma = document.getElementById('turma').value;
         const rota = document.getElementById('rota').value;
-        await supabase.from('alunos').insert([{ nome, turma, rota }]);
-        renderizarAlunos(dataSelecionada);
+
+        // Salva no Supabase
+        const { error } = await supabase.from('alunos').insert([{ nome, turma, rota }]);
+        if (error) {
+            alert('Erro ao salvar aluno: ' + error.message);
+            return;
+        }
+        alert('Aluno salvo com sucesso!');
         this.reset();
+        renderizarAlunos();
     });
 
     // Botão para salvar presenças
@@ -168,12 +178,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-carregar-data').addEventListener('click', function() {
         dataSelecionada = document.getElementById('filtro-data').value;
+        const rotaSelecionada = document.getElementById('filtro-rota').value;
         if (!dataSelecionada) {
             alert('Selecione uma data!');
             return;
         }
-        renderizarAlunos(dataSelecionada);
-        renderizarRelatorio(dataSelecionada);
+        renderizarAlunos(dataSelecionada, rotaSelecionada);
+        renderizarRelatorio(dataSelecionada, rotaSelecionada);
     });
 
     renderizarAlunos();
