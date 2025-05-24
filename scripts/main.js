@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alunos.forEach(aluno => {
             const li = document.createElement('li');
             li.textContent = `${aluno.nome} - Turma: ${aluno.turma} - Rota: ${aluno.rota || '-'}`;
+
             // Checkbox de presença
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
@@ -40,6 +41,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 presencasMarcadas[aluno.id] = checkbox.checked;
             };
             li.appendChild(checkbox);
+
+            // Botão remover aluno
+            const btnRemover = document.createElement('button');
+            btnRemover.innerHTML = '🗑️'; // Ou use um SVG se preferir
+            btnRemover.title = 'Remover aluno';
+            btnRemover.className = 'btn-remover-aluno';
+            btnRemover.style.marginLeft = '12px';
+            btnRemover.addEventListener('click', async (e) => {
+                e.stopPropagation(); // Evita conflitos de clique em mobile
+                if (confirm(`Deseja remover o aluno(a) "${aluno.nome}"?`)) {
+                    await supabase.from('alunos').delete().eq('id', aluno.id);
+                    renderizarAlunos(dataSelecionada, document.getElementById('filtro-rota').value);
+                }
+            });
+            li.appendChild(btnRemover);
+
             lista.appendChild(li);
         });
     }
